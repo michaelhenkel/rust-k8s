@@ -1,6 +1,0 @@
-mod k8s_io_apimachinery_pkg_runtime_generated;
-mod k8s_io_apimachinery_pkg_apis_meta_v1_generated;
-mod k8s_io_apimachinery_pkg_api_resource_generated;
-mod k8s_io_apimachinery_pkg_util_intstr_generated;
-mod k8s_io_api_core_v1_generated;
-mod ssd_git_juniper_net_contrail_cn2_contrail_pkg_apis_core_v1alpha1_generated;

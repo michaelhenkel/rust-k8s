@@ -12,6 +12,6 @@ for i in $(find . -iname "*.proto"); do                                         
     echo $oldimport
     sed -i "s#${oldimport}#${new}#g" *.proto
 done
-for i in $(ls *.proto); do                                                                                                       [19:41:12]
+for i in $(ls *.proto); do
     protoc --rust_out . -I. ${i}
 done

@@ -1,29 +1,20 @@
 use futures::prelude::*;
-use kube_client::*;
 use kube::{
-    api::{Api, DynamicObject, GroupVersionKind, ListParams, ResourceExt},
+    api::{Api, DynamicObject, GroupVersionKind, ListParams, ResourceExt, PostParams},
     discovery::{verbs, Discovery, Scope},
     discovery,
     runtime::{utils::try_flatten_applied, watcher},
-    Client,
+    Client, core::object::HasSpec,
 };
 
-use std::env;
+use serde::{Serialize, Deserialize};
 
-mod protos {
-    pub mod ssd_git_juniper_net_contrail_cn2_contrail_pkg_apis_core_v1alpha1_generated;
-    pub mod k8s_io_apimachinery_pkg_runtime_generated;
-    pub mod k8s_io_apimachinery_pkg_apis_meta_v1_generated;
-    pub mod k8s_io_apimachinery_pkg_api_resource_generated;
-    pub mod k8s_io_apimachinery_pkg_util_intstr_generated;
-    pub mod k8s_io_api_core_v1_generated;
-}
+use std::env;
 
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    let vn = protos::ssd_git_juniper_net_contrail_cn2_contrail_pkg_apis_core_v1alpha1_generated::VirtualNetwork::new();
-    let vn_spec = vn.get_spec();
+
     std::env::set_var("RUST_LOG", "info,kube=debug");
     env_logger::init();
     let client = Client::try_default().await?;
@@ -37,7 +28,34 @@ async fn main() -> anyhow::Result<()> {
     
     for group in disco.groups() {
         for (ar, _caps) in group.recommended_resources(){
+            if ar.kind == "VirtualNetwork" {
+                let api: Api<DynamicObject> = Api::all_with(client.clone(), &ar);
+                let list = api.list(&Default::default()).await?;
+                for item in list.items {
+                    let serialized = serde_json::to_string(&item).unwrap();
+
+                    //let vn = protos::ssd_git_juniper_net_contrail_cn2_contrail_pkg_apis_core_v1alpha1_generated::VirtualNetwork::new();
+
+                    let json_string = serde_json::to_string(&item);
+                    
+                    //let vn: protos::ssd_git_juniper_net_contrail_cn2_contrail_pkg_apis_core_v1alpha1_generated::VirtualNetwork = protobuf::Message::parse_from_bytes(&json_byte.unwrap());
+                    
+                    //let data= item.data;
+                    //let spec = data["spec"].as_object().unwrap();
+                    //let vnSpec = protos::ssd_git_juniper_net_contrail_cn2_contrail_pkg_apis_core_v1alpha1_generated::VirtualNetworkSpec::new();
+                    
+                }
+            }
+            /*
+            let api = Api::<DynamicObject>::all_with(client.clone(), &ar);
+            let res = api.get(&"bla");
+            //let vns1: Api<VirtualNetwork> = Api::all(client);
+            //let vns = Api::<protos::ssd_git_juniper_net_contrail_cn2_contrail_pkg_apis_core_v1alpha1_generated::VirtualNetwork>::namespaced(client, &"bla");
+            let vn = protos::ssd_git_juniper_net_contrail_cn2_contrail_pkg_apis_core_v1alpha1_generated::VirtualNetwork::new();
+            let md = vn.get_metadata();
+            vns.create(&PostParams::default, &vn);
             //log::info!("{}/{} : {}", group.name(), ar.version, ar.kind);
+            */
         }
     }
 
