@@ -637,6 +637,8 @@ dependencies = [
  "kube",
  "log",
  "prost",
+ "prost-build",
+ "prost-serde",
  "serde",
  "serde_json",
  "tokio",
@@ -1082,6 +1084,17 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
+]
+
+[[package]]
+name = "prost-serde"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6ba72101a1eb9e65d7f751d9aa8745df8fca7b4a01fc06ae2ff2f97d8c888f49"
+dependencies = [
+ "prost-build",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]

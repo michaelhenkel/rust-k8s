@@ -15,3 +15,13 @@ done
 for i in $(ls *.proto); do
     protoc --rust_out . -I. ${i}
 done
+for i in $(grep -r message . |awk '{print $2}'); do
+echo "    .type_attribute(\"ssd_git.juniper.net.contrail.cn2.contrail.pkg.apis.core.v1alpha1.${i}\", \"#[derive(serde::Serialize, serde::Deserialize)]\")"
+done
+
+for i in $(find . -name "*.proto"); do
+package=$(grep -o -P '(?<=^package ).*(?=;)' $i)
+for message in $(grep -o -P '(?<=message ).*(?= {)' ${i}); do
+echo "    .type_attribute(\"${package}.${message}\", \"#[derive(serde::Serialize, serde::Deserialize)]\")"
+done
+done
