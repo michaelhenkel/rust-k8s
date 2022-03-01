@@ -58,131 +58,21 @@ async fn main() -> anyhow::Result<()> {
                     let mut new_item = item.clone();
                     new_item.metadata.owner_references = or;
                     let json_string = serde_json::to_string(&new_item).unwrap();
+                    let spec_data = &item.data["spec"];
+                    let spec_json_string = serde_json::to_string(&spec_data).unwrap();
                     //let vn = deserialize_virtual_network(&ser);
                     //item.serialize(serialize_virtual_netwrk);
                     //item.metadata.owner_references.
                     println!("{}", json_string);
-                    let vn = v1alpha1::VirtualNetwork::default();
+                    //let vn = v1alpha1::VirtualNetwork::default();
                     //let vn_spec = vn.spec.unwrap();
-                    let vn_string = serde_json::to_string(&vn).unwrap();
-                    println!("{}", vn_string);
-                    let data = r#"
-                    {
-                        "metadata": {
-                            "annotations": {
-                                "juniper.net/nad-cluster-name": "contrail-k8s-kubemanager-cluster1-local",
-                                "juniper.net/nad-name": "ocmh-1",
-                                "juniper.net/nad-namespace": "ocmh"
-                            },
-                            "labels": {},
-                            "owner_references": []
-                        },
-                        "spec": null,
-                        "status": null
-                    }"#;
-                    let data_x = r#"
-                    {
-                        "metadata": {
-                            "annotations": {
-                                "juniper.net/nad-cluster-name": "contrail-k8s-kubemanager-cluster1-local",
-                                "juniper.net/nad-name": "ocmh-1",
-                                "juniper.net/nad-namespace": "ocmh"
-                            },
-                            "creationTimestamp": "2022-02-23T18:29:16Z",
-                            "finalizers": ["virtual-network-id-deallocation.finalizers.core.juniper.net", "route-target.finalizers.core.juniper.net", "vn-routinginstance-delete.finalizers.core.juniper.net"],
-                            "generation": 1,
-                            "labels": {
-                                "back-reference.core.juniper.net/347901e75899ab8a4cde2f0275a7883f24c7689777025c80c7ad0b8f": "Subnet_ocmh_ocmh-1-v4"
-                            },
-                            "managedFields": [{
-                                "apiVersion": "core.contrail.juniper.net/v1alpha1",
-                                "fieldsType": "FieldsV1",
-                                "fieldsV1": {
-                                    "f:metadata": {
-                                        "f:annotations": {
-                                            ".": {},
-                                            "f:juniper.net/nad-cluster-name": {},
-                                            "f:juniper.net/nad-name": {},
-                                            "f:juniper.net/nad-namespace": {}
-                                        }
-                                    },
-                                    "f:spec": {
-                                        "f:fabricSNAT": {},
-                                        "f:v4SubnetReference": {
-                                            ".": {},
-                                            "f:apiVersion": {},
-                                            "f:kind": {},
-                                            "f:name": {},
-                                            "f:namespace": {},
-                                            "f:resourceVersion": {},
-                                            "f:uid": {}
-                                        },
-                                        "f:virtualNetworkProperties": {
-                                            "f:forwardingMode": {},
-                                            "f:rpf": {}
-                                        }
-                                    }
-                                },
-                                "manager": "kubemanager",
-                                "operation": "Update",
-                                "time": "2022-02-23T18:29:16Z"
-                            }, {
-                                "apiVersion": "core.contrail.juniper.net/v1alpha1",
-                                "fieldsType": "FieldsV1",
-                                "fieldsV1": {
-                                    "f:metadata": {
-                                        "f:finalizers": {
-                                            ".": {},
-                                            "v:\"route-target.finalizers.core.juniper.net\"": {},
-                                            "v:\"virtual-network-id-deallocation.finalizers.core.juniper.net\"": {},
-                                            "v:\"vn-routinginstance-delete.finalizers.core.juniper.net\"": {}
-                                        }
-                                    },
-                                    "f:status": {
-                                        "f:observation": {},
-                                        "f:state": {},
-                                        "f:virtualNetworkNetworkId": {}
-                                    }
-                                },
-                                "manager": "manager",
-                                "operation": "Update",
-                                "time": "2022-02-23T18:29:16Z"
-                            }],
-                            "name": "ocmh-1",
-                            "namespace": "ocmh",
-                            "ownerReferences": [{
-                                "apiVersion": "",
-                                "kind": "",
-                                "name": "",
-                                "uid": ""
-                            }],
-                            "resourceVersion": "19355017",
-                            "uid": "73d0a5b6-f906-45b8-b837-0a60fabcda52"
-                        },
-                        "spec": {
-                            "fqName": ["default-domain", "ocmh", "ocmh-1"],
-                            "fabricSNAT": false,
-                            "v4SubnetReference": {
-                                "kind": "Subnet",
-                                "namespace": "ocmh",
-                                "name": "ocmh-1-v4",
-                                "uid": "d63a35bb-f48b-43e6-ac9e-ae165ecc7b18",
-                                "apiVersion": "core.contrail.juniper.net/v1alpha1",
-                                "resourceVersion": "19354960",
-                                "fqName": ["default-domain", "ocmh", "ocmh-1-v4"]
-                            },
-                            "virtualNetworkProperties": {
-                                "rpf": "enable",
-                                "forwardingMode": "l2_l3"
-                            }
-                        },
-                        "status": {
-                            "state": "Success",
-                            "observation": "",
-                            "virtualNetworkNetworkId": 9
-                        }
-                    }"#;
-                    let vn_x: v1alpha1::VirtualNetwork = serde_json::from_str(&data)?;
+                    //let vn_string = serde_json::to_string(&vn.spec).unwrap();
+                    //println!("{}", vn_string);
+                    
+                    let vn_x: v1alpha1::VirtualNetworkSpec = serde_json::from_str(&spec_json_string)?;
+                    let vnx_string = serde_json::to_string(&vn_x).unwrap();
+                    println!("{}", spec_json_string);
+                    println!("{}", vnx_string);
 
                     //md.owner_references
                     //let vn: protos::ssd_git::juniper::net::contrail::cn2::contrail::pkg::apis::core::v1alpha1::VirtualNetworkSpec = serde_json::from_str(&json_string).unwrap();

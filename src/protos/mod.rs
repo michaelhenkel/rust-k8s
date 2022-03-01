@@ -9,16 +9,16 @@ pub mod k8s {
                         }
                     }
                 }
-                pub mod util {
-                    pub mod intstr {
-                        include!("k8s.io.apimachinery.pkg.util.intstr.rs");
-                    }
-                }
                 pub mod runtime {
                     pub mod schema {
                         include!("k8s.io.apimachinery.pkg.runtime.schema.rs");
                     }
                     include!("k8s.io.apimachinery.pkg.runtime.rs");
+                }
+                pub mod util {
+                    pub mod intstr {
+                        include!("k8s.io.apimachinery.pkg.util.intstr.rs");
+                    }
                 }
                 pub mod api {
                     pub mod resource {

@@ -57,8 +57,10 @@
 /// +k8s:deepcopy-gen=true
 /// +k8s:openapi-gen=true
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Quantity {
     #[prost(string, optional, tag="1")]
+    #[serde(default)]
     pub string: ::core::option::Option<::prost::alloc::string::String>,
 }

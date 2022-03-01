@@ -1,18 +1,22 @@
 /// APIGroup contains the name, the supported versions, and the preferred version
 /// of a group.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ApiGroup {
     /// name is the name of the group.
     #[prost(string, optional, tag="1")]
+    #[serde(default)]
     pub name: ::core::option::Option<::prost::alloc::string::String>,
     /// versions are the versions supported in this group.
     #[prost(message, repeated, tag="2")]
+    #[serde(default)]
     pub versions: ::prost::alloc::vec::Vec<GroupVersionForDiscovery>,
     /// preferredVersion is the version preferred by the API server, which
     /// probably is the storage version.
     /// +optional
     #[prost(message, optional, tag="3")]
+    #[serde(default)]
     pub preferred_version: ::core::option::Option<GroupVersionForDiscovery>,
     /// a map of client CIDR to server address that is serving this group.
     /// This is to help clients reach servers in the most network-efficient way possible.
@@ -23,52 +27,65 @@ pub struct ApiGroup {
     /// Server looks at X-Forwarded-For header or X-Real-Ip header or request.RemoteAddr (in that order) to get the client IP.
     /// +optional
     #[prost(message, repeated, tag="4")]
+    #[serde(default)]
     pub server_address_by_client_cid_rs: ::prost::alloc::vec::Vec<ServerAddressByClientCidr>,
 }
 /// APIGroupList is a list of APIGroup, to allow clients to discover the API at
 /// /apis.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ApiGroupList {
     /// groups is a list of APIGroup.
     #[prost(message, repeated, tag="1")]
+    #[serde(default)]
     pub groups: ::prost::alloc::vec::Vec<ApiGroup>,
 }
 /// APIResource specifies the name of a resource and whether it is namespaced.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ApiResource {
     /// name is the plural name of the resource.
     #[prost(string, optional, tag="1")]
+    #[serde(default)]
     pub name: ::core::option::Option<::prost::alloc::string::String>,
     /// singularName is the singular name of the resource.  This allows clients to handle plural and singular opaquely.
     /// The singularName is more correct for reporting status on a single item and both singular and plural are allowed
     /// from the kubectl CLI interface.
     #[prost(string, optional, tag="6")]
+    #[serde(default)]
     pub singular_name: ::core::option::Option<::prost::alloc::string::String>,
     /// namespaced indicates if a resource is namespaced or not.
     #[prost(bool, optional, tag="2")]
+    #[serde(default)]
     pub namespaced: ::core::option::Option<bool>,
     /// group is the preferred group of the resource.  Empty implies the group of the containing resource list.
     /// For subresources, this may have a different value, for example: Scale".
     #[prost(string, optional, tag="8")]
+    #[serde(default)]
     pub group: ::core::option::Option<::prost::alloc::string::String>,
     /// version is the preferred version of the resource.  Empty implies the version of the containing resource list
     /// For subresources, this may have a different value, for example: v1 (while inside a v1beta1 version of the core resource's group)".
     #[prost(string, optional, tag="9")]
+    #[serde(default)]
     pub version: ::core::option::Option<::prost::alloc::string::String>,
     /// kind is the kind for the resource (e.g. 'Foo' is the kind for a resource 'foo')
     #[prost(string, optional, tag="3")]
+    #[serde(default)]
     pub kind: ::core::option::Option<::prost::alloc::string::String>,
     /// verbs is a list of supported kube verbs (this includes get, list, watch, create,
     /// update, patch, delete, deletecollection, and proxy)
     #[prost(message, optional, tag="4")]
+    #[serde(default)]
     pub verbs: ::core::option::Option<Verbs>,
     /// shortNames is a list of suggested short names of the resource.
     #[prost(string, repeated, tag="5")]
+    #[serde(default)]
     pub short_names: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// categories is a list of the grouped resources this resource belongs to (e.g. 'all')
     #[prost(string, repeated, tag="7")]
+    #[serde(default)]
     pub categories: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// The hash value of the storage version, the version this resource is
     /// converted to when written to the data store. Value must be treated
@@ -79,19 +96,23 @@ pub struct ApiResource {
     /// This field will remain optional even if it graduates.
     /// +optional
     #[prost(string, optional, tag="10")]
+    #[serde(default)]
     pub storage_version_hash: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// APIResourceList is a list of APIResource, it is used to expose the name of the
 /// resources supported in a specific group and version, and if the resource
 /// is namespaced.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ApiResourceList {
     /// groupVersion is the group and version this APIResourceList is for.
     #[prost(string, optional, tag="1")]
+    #[serde(default)]
     pub group_version: ::core::option::Option<::prost::alloc::string::String>,
     /// resources contains the name of the resources and if they are namespaced.
     #[prost(message, repeated, tag="2")]
+    #[serde(default)]
     pub resources: ::prost::alloc::vec::Vec<ApiResource>,
 }
 /// APIVersions lists the versions that are available, to allow clients to
@@ -100,10 +121,12 @@ pub struct ApiResourceList {
 /// +protobuf.options.(gogoproto.goproto_stringer)=false
 /// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ApiVersions {
     /// versions are the api versions that are available.
     #[prost(string, repeated, tag="1")]
+    #[serde(default)]
     pub versions: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// a map of client CIDR to server address that is serving this group.
     /// This is to help clients reach servers in the most network-efficient way possible.
@@ -113,6 +136,7 @@ pub struct ApiVersions {
     /// For example: the master will return an internal IP CIDR only, if the client reaches the server using an internal IP.
     /// Server looks at X-Forwarded-For header or X-Real-Ip header or request.RemoteAddr (in that order) to get the client IP.
     #[prost(message, repeated, tag="2")]
+    #[serde(default)]
     pub server_address_by_client_cid_rs: ::prost::alloc::vec::Vec<ServerAddressByClientCidr>,
 }
 /// Condition contains details for one aspect of the current state of this API Resource.
@@ -130,6 +154,7 @@ pub struct ApiVersions {
 ///     // other fields
 /// }
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Condition {
     /// type of condition in CamelCase or in foo.example.com/CamelCase.
@@ -142,12 +167,14 @@ pub struct Condition {
     /// +kubebuilder:validation:Pattern=`^(\[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9\])$`
     /// +kubebuilder:validation:MaxLength=316
     #[prost(string, optional, tag="1")]
+    #[serde(default)]
     pub r#type: ::core::option::Option<::prost::alloc::string::String>,
     /// status of the condition, one of True, False, Unknown.
     /// +required
     /// +kubebuilder:validation:Required
     /// +kubebuilder:validation:Enum=True;False;Unknown
     #[prost(string, optional, tag="2")]
+    #[serde(default)]
     pub status: ::core::option::Option<::prost::alloc::string::String>,
     /// observedGeneration represents the .metadata.generation that the condition was set based upon.
     /// For instance, if .metadata.generation is currently 12, but the .status.conditions\[x\].observedGeneration is 9, the condition is out of date
@@ -155,6 +182,7 @@ pub struct Condition {
     /// +optional
     /// +kubebuilder:validation:Minimum=0
     #[prost(int64, optional, tag="3")]
+    #[serde(default)]
     pub observed_generation: ::core::option::Option<i64>,
     /// lastTransitionTime is the last time the condition transitioned from one status to another.
     /// This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
@@ -163,6 +191,7 @@ pub struct Condition {
     /// +kubebuilder:validation:Type=string
     /// +kubebuilder:validation:Format=date-time
     #[prost(message, optional, tag="4")]
+    #[serde(default)]
     pub last_transition_time: ::core::option::Option<Time>,
     /// reason contains a programmatic identifier indicating the reason for the condition's last transition.
     /// Producers of specific condition types may define expected values and meanings for this field,
@@ -175,6 +204,7 @@ pub struct Condition {
     /// +kubebuilder:validation:MinLength=1
     /// +kubebuilder:validation:Pattern=`^\[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_\])?$`
     #[prost(string, optional, tag="5")]
+    #[serde(default)]
     pub reason: ::core::option::Option<::prost::alloc::string::String>,
     /// message is a human readable message indicating details about the transition.
     /// This may be an empty string.
@@ -182,10 +212,12 @@ pub struct Condition {
     /// +kubebuilder:validation:Required
     /// +kubebuilder:validation:MaxLength=32768
     #[prost(string, optional, tag="6")]
+    #[serde(default)]
     pub message: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// CreateOptions may be provided when creating an API object.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CreateOptions {
     /// When present, indicates that modifications should not be
@@ -195,6 +227,7 @@ pub struct CreateOptions {
     /// - All: all dry run stages will be processed
     /// +optional
     #[prost(string, repeated, tag="1")]
+    #[serde(default)]
     pub dry_run: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// fieldManager is a name associated with the actor or entity
     /// that is making these changes. The value must be less than or
@@ -202,10 +235,12 @@ pub struct CreateOptions {
     /// as defined by <https://golang.org/pkg/unicode/#IsPrint.>
     /// +optional
     #[prost(string, optional, tag="3")]
+    #[serde(default)]
     pub field_manager: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// DeleteOptions may be provided when deleting an API object.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DeleteOptions {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer.
@@ -214,12 +249,14 @@ pub struct DeleteOptions {
     /// Defaults to a per object value if not specified. zero means delete immediately.
     /// +optional
     #[prost(int64, optional, tag="1")]
+    #[serde(default)]
     pub grace_period_seconds: ::core::option::Option<i64>,
     /// Must be fulfilled before a deletion is carried out. If not possible, a 409 Conflict status will be
     /// returned.
     /// +k8s:conversion-gen=false
     /// +optional
     #[prost(message, optional, tag="2")]
+    #[serde(default)]
     pub preconditions: ::core::option::Option<Preconditions>,
     /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7.
     /// Should the dependent objects be orphaned. If true/false, the "orphan"
@@ -227,6 +264,7 @@ pub struct DeleteOptions {
     /// Either this field or PropagationPolicy may be set, but not both.
     /// +optional
     #[prost(bool, optional, tag="3")]
+    #[serde(default)]
     pub orphan_dependents: ::core::option::Option<bool>,
     /// Whether and how garbage collection will be performed.
     /// Either this field or OrphanDependents may be set, but not both.
@@ -238,6 +276,7 @@ pub struct DeleteOptions {
     /// foreground.
     /// +optional
     #[prost(string, optional, tag="4")]
+    #[serde(default)]
     pub propagation_policy: ::core::option::Option<::prost::alloc::string::String>,
     /// When present, indicates that modifications should not be
     /// persisted. An invalid or unrecognized dryRun directive will
@@ -246,29 +285,35 @@ pub struct DeleteOptions {
     /// - All: all dry run stages will be processed
     /// +optional
     #[prost(string, repeated, tag="5")]
+    #[serde(default)]
     pub dry_run: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 /// Duration is a wrapper around time.Duration which supports correct
 /// marshaling to YAML and JSON. In particular, it marshals into strings, which
 /// can be used as map keys in json.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Duration {
     #[prost(int64, optional, tag="1")]
+    #[serde(default)]
     pub duration: ::core::option::Option<i64>,
 }
 /// ExportOptions is the query options to the standard REST get call.
 /// Deprecated. Planned for removal in 1.18.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExportOptions {
     /// Should this value be exported.  Export strips fields that a user can not specify.
     /// Deprecated. Planned for removal in 1.18.
     #[prost(bool, optional, tag="1")]
+    #[serde(default)]
     pub export: ::core::option::Option<bool>,
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     /// Deprecated. Planned for removal in 1.18.
     #[prost(bool, optional, tag="2")]
+    #[serde(default)]
     pub exact: ::core::option::Option<bool>,
 }
 /// FieldsV1 stores a set of fields in a data structure like a Trie, in JSON format.
@@ -284,14 +329,17 @@ pub struct ExportOptions {
 /// The exact format is defined in sigs.k8s.io/structured-merge-diff
 /// +protobuf.options.(gogoproto.goproto_stringer)=false
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FieldsV1 {
     /// Raw is the underlying serialization of this object.
     #[prost(bytes="vec", optional, tag="1")]
+    #[serde(default)]
     pub raw: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
 }
 /// GetOptions is the standard query options to the standard REST get call.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetOptions {
     /// resourceVersion sets a constraint on what resource versions a request may be served from.
@@ -301,6 +349,7 @@ pub struct GetOptions {
     /// Defaults to unset
     /// +optional
     #[prost(string, optional, tag="1")]
+    #[serde(default)]
     pub resource_version: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// GroupKind specifies a Group and a Kind, but does not force a version.  This is useful for identifying
@@ -308,11 +357,14 @@ pub struct GetOptions {
 ///
 /// +protobuf.options.(gogoproto.goproto_stringer)=false
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GroupKind {
     #[prost(string, optional, tag="1")]
+    #[serde(default)]
     pub group: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(string, optional, tag="2")]
+    #[serde(default)]
     pub kind: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// GroupResource specifies a Group and a Resource, but does not force a version.  This is useful for identifying
@@ -320,35 +372,44 @@ pub struct GroupKind {
 ///
 /// +protobuf.options.(gogoproto.goproto_stringer)=false
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GroupResource {
     #[prost(string, optional, tag="1")]
+    #[serde(default)]
     pub group: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(string, optional, tag="2")]
+    #[serde(default)]
     pub resource: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// GroupVersion contains the "group" and the "version", which uniquely identifies the API.
 ///
 /// +protobuf.options.(gogoproto.goproto_stringer)=false
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GroupVersion {
     #[prost(string, optional, tag="1")]
+    #[serde(default)]
     pub group: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(string, optional, tag="2")]
+    #[serde(default)]
     pub version: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// GroupVersion contains the "group/version" and "version" string of a version.
 /// It is made a struct to keep extensibility.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GroupVersionForDiscovery {
     /// groupVersion specifies the API group and version in the form "group/version"
     #[prost(string, optional, tag="1")]
+    #[serde(default)]
     pub group_version: ::core::option::Option<::prost::alloc::string::String>,
     /// version specifies the version in the form of "version". This is to save
     /// the clients the trouble of splitting the GroupVersion.
     #[prost(string, optional, tag="2")]
+    #[serde(default)]
     pub version: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// GroupVersionKind unambiguously identifies a kind.  It doesn't anonymously include GroupVersion
@@ -356,13 +417,17 @@ pub struct GroupVersionForDiscovery {
 ///
 /// +protobuf.options.(gogoproto.goproto_stringer)=false
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GroupVersionKind {
     #[prost(string, optional, tag="1")]
+    #[serde(default)]
     pub group: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(string, optional, tag="2")]
+    #[serde(default)]
     pub version: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(string, optional, tag="3")]
+    #[serde(default)]
     pub kind: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// GroupVersionResource unambiguously identifies a resource.  It doesn't anonymously include GroupVersion
@@ -370,13 +435,17 @@ pub struct GroupVersionKind {
 ///
 /// +protobuf.options.(gogoproto.goproto_stringer)=false
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GroupVersionResource {
     #[prost(string, optional, tag="1")]
+    #[serde(default)]
     pub group: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(string, optional, tag="2")]
+    #[serde(default)]
     pub version: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(string, optional, tag="3")]
+    #[serde(default)]
     pub resource: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// A label selector is a label query over a set of resources. The result of matchLabels and
@@ -384,6 +453,7 @@ pub struct GroupVersionResource {
 /// label selector matches no objects.
 /// +structType=atomic
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LabelSelector {
     /// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
@@ -391,25 +461,30 @@ pub struct LabelSelector {
     /// operator is "In", and the values array contains only "value". The requirements are ANDed.
     /// +optional
     #[prost(map="string, string", tag="1")]
+    #[serde(default)]
     pub match_labels: ::std::collections::HashMap<::prost::alloc::string::String, ::prost::alloc::string::String>,
     /// matchExpressions is a list of label selector requirements. The requirements are ANDed.
     /// +optional
     #[prost(message, repeated, tag="2")]
+    #[serde(default)]
     pub match_expressions: ::prost::alloc::vec::Vec<LabelSelectorRequirement>,
 }
 /// A label selector requirement is a selector that contains values, a key, and an operator that
 /// relates the key and values.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LabelSelectorRequirement {
     /// key is the label key that the selector applies to.
     /// +patchMergeKey=key
     /// +patchStrategy=merge
     #[prost(string, optional, tag="1")]
+    #[serde(default)]
     pub key: ::core::option::Option<::prost::alloc::string::String>,
     /// operator represents a key's relationship to a set of values.
     /// Valid operators are In, NotIn, Exists and DoesNotExist.
     #[prost(string, optional, tag="2")]
+    #[serde(default)]
     pub operator: ::core::option::Option<::prost::alloc::string::String>,
     /// values is an array of string values. If the operator is In or NotIn,
     /// the values array must be non-empty. If the operator is Exists or DoesNotExist,
@@ -417,24 +492,29 @@ pub struct LabelSelectorRequirement {
     /// merge patch.
     /// +optional
     #[prost(string, repeated, tag="3")]
+    #[serde(default)]
     pub values: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 /// List holds a list of objects, which may not be known by the server.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct List {
     /// Standard list metadata.
     /// More info: <https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds>
     /// +optional
     #[prost(message, optional, tag="1")]
+    #[serde(default)]
     pub metadata: ::core::option::Option<ListMeta>,
     /// List of objects
     #[prost(message, repeated, tag="2")]
+    #[serde(default)]
     pub items: ::prost::alloc::vec::Vec<super::super::super::runtime::RawExtension>,
 }
 /// ListMeta describes metadata that synthetic resources must have, including lists and
 /// various status objects. A resource may have only one of {ObjectMeta, ListMeta}.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListMeta {
     /// selfLink is a URL representing this object.
@@ -446,6 +526,7 @@ pub struct ListMeta {
     /// to be removed in 1.21 release.
     /// +optional
     #[prost(string, optional, tag="1")]
+    #[serde(default)]
     pub self_link: ::core::option::Option<::prost::alloc::string::String>,
     /// String that identifies the server's internal version of this object that
     /// can be used by clients to determine when objects have changed.
@@ -455,6 +536,7 @@ pub struct ListMeta {
     /// More info: <https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency>
     /// +optional
     #[prost(string, optional, tag="2")]
+    #[serde(default)]
     pub resource_version: ::core::option::Option<::prost::alloc::string::String>,
     /// continue may be set if the user set a limit on the number of items returned, and indicates that
     /// the server has more data available. The value is opaque and may be used to issue another request
@@ -464,6 +546,7 @@ pub struct ListMeta {
     /// identical to the value in the first response, unless you have received this token from an error
     /// message.
     #[prost(string, optional, tag="3")]
+    #[serde(default)]
     pub r#continue: ::core::option::Option<::prost::alloc::string::String>,
     /// remainingItemCount is the number of subsequent items in the list which are not included in this
     /// list response. If the list request contained label or field selectors, then the number of
@@ -476,26 +559,31 @@ pub struct ListMeta {
     /// should not rely on the remainingItemCount to be set or to be exact.
     /// +optional
     #[prost(int64, optional, tag="4")]
+    #[serde(default)]
     pub remaining_item_count: ::core::option::Option<i64>,
 }
 /// ListOptions is the query options to a standard REST list call.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListOptions {
     /// A selector to restrict the list of returned objects by their labels.
     /// Defaults to everything.
     /// +optional
     #[prost(string, optional, tag="1")]
+    #[serde(default)]
     pub label_selector: ::core::option::Option<::prost::alloc::string::String>,
     /// A selector to restrict the list of returned objects by their fields.
     /// Defaults to everything.
     /// +optional
     #[prost(string, optional, tag="2")]
+    #[serde(default)]
     pub field_selector: ::core::option::Option<::prost::alloc::string::String>,
     /// Watch for changes to the described resources and return them as a stream of
     /// add, update, and remove notifications. Specify resourceVersion.
     /// +optional
     #[prost(bool, optional, tag="3")]
+    #[serde(default)]
     pub watch: ::core::option::Option<bool>,
     /// allowWatchBookmarks requests watch events with type "BOOKMARK".
     /// Servers that do not implement bookmarks may ignore this flag and
@@ -507,6 +595,7 @@ pub struct ListOptions {
     /// this field is ignored.
     /// +optional
     #[prost(bool, optional, tag="9")]
+    #[serde(default)]
     pub allow_watch_bookmarks: ::core::option::Option<bool>,
     /// resourceVersion sets a constraint on what resource versions a request may be served from.
     /// See <https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions> for
@@ -515,6 +604,7 @@ pub struct ListOptions {
     /// Defaults to unset
     /// +optional
     #[prost(string, optional, tag="4")]
+    #[serde(default)]
     pub resource_version: ::core::option::Option<::prost::alloc::string::String>,
     /// resourceVersionMatch determines how resourceVersion is applied to list calls.
     /// It is highly recommended that resourceVersionMatch be set for list calls where
@@ -525,11 +615,13 @@ pub struct ListOptions {
     /// Defaults to unset
     /// +optional
     #[prost(string, optional, tag="10")]
+    #[serde(default)]
     pub resource_version_match: ::core::option::Option<::prost::alloc::string::String>,
     /// Timeout for the list/watch call.
     /// This limits the duration of the call, regardless of any activity or inactivity.
     /// +optional
     #[prost(int64, optional, tag="5")]
+    #[serde(default)]
     pub timeout_seconds: ::core::option::Option<i64>,
     /// limit is a maximum number of responses to return for a list call. If more items exist, the
     /// server will set the `continue` field on the list metadata to a value that can be used with the
@@ -548,6 +640,7 @@ pub struct ListOptions {
     /// updated during a chunked list the version of the object that was present at the time the first list
     /// result was calculated is returned.
     #[prost(int64, optional, tag="7")]
+    #[serde(default)]
     pub limit: ::core::option::Option<i64>,
     /// The continue option should be set when retrieving more results from the server. Since this value is
     /// server defined, clients may only use the continue value from a previous query result with identical
@@ -564,37 +657,46 @@ pub struct ListOptions {
     /// This field is not supported when watch is true. Clients may start a watch from the last
     /// resourceVersion value returned by the server and not miss any modifications.
     #[prost(string, optional, tag="8")]
+    #[serde(default)]
     pub r#continue: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// ManagedFieldsEntry is a workflow-id, a FieldSet and the group version of the resource
 /// that the fieldset applies to.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ManagedFieldsEntry {
     /// Manager is an identifier of the workflow managing these fields.
     #[prost(string, optional, tag="1")]
+    #[serde(default)]
     pub manager: ::core::option::Option<::prost::alloc::string::String>,
     /// Operation is the type of operation which lead to this ManagedFieldsEntry being created.
     /// The only valid values for this field are 'Apply' and 'Update'.
     #[prost(string, optional, tag="2")]
+    #[serde(default)]
     pub operation: ::core::option::Option<::prost::alloc::string::String>,
     /// APIVersion defines the version of this resource that this field set
     /// applies to. The format is "group/version" just like the top-level
     /// APIVersion field. It is necessary to track the version of a field
     /// set because it cannot be automatically converted.
     #[prost(string, optional, tag="3")]
+    #[serde(default)]
     pub api_version: ::core::option::Option<::prost::alloc::string::String>,
     /// Time is timestamp of when these fields were set. It should always be empty if Operation is 'Apply'
     /// +optional
     #[prost(message, optional, tag="4")]
+    #[serde(skip)]
+    #[serde(default)]
     pub time: ::core::option::Option<Time>,
     /// FieldsType is the discriminator for the different fields format and version.
     /// There is currently only one possible value: "FieldsV1"
     #[prost(string, optional, tag="6")]
+    #[serde(default)]
     pub fields_type: ::core::option::Option<::prost::alloc::string::String>,
     /// FieldsV1 holds the first JSON version format as described in the "FieldsV1" type.
     /// +optional
     #[prost(message, optional, tag="7")]
+    #[serde(default)]
     pub fields_v1: ::core::option::Option<FieldsV1>,
 }
 /// MicroTime is version of Time with microsecond level precision.
@@ -603,23 +705,27 @@ pub struct ManagedFieldsEntry {
 /// +protobuf.as=Timestamp
 /// +protobuf.options.(gogoproto.goproto_stringer)=false
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MicroTime {
     /// Represents seconds of UTC time since Unix epoch
     /// 1970-01-01T00:00:00Z. Must be from 0001-01-01T00:00:00Z to
     /// 9999-12-31T23:59:59Z inclusive.
     #[prost(int64, optional, tag="1")]
+    #[serde(default)]
     pub seconds: ::core::option::Option<i64>,
     /// Non-negative fractions of a second at nanosecond resolution. Negative
     /// second values with fractions must still have non-negative nanos values
     /// that count forward in time. Must be from 0 to 999,999,999
     /// inclusive. This field may be limited in precision depending on context.
     #[prost(int32, optional, tag="2")]
+    #[serde(default)]
     pub nanos: ::core::option::Option<i32>,
 }
 /// ObjectMeta is metadata that all persisted resources must have, which includes all objects
 /// users must create.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ObjectMeta {
     /// Name must be unique within a namespace. Is required when creating resources, although
@@ -630,6 +736,7 @@ pub struct ObjectMeta {
     /// More info: <http://kubernetes.io/docs/user-guide/identifiers#names>
     /// +optional
     #[prost(string, optional, tag="1")]
+    #[serde(default)]
     pub name: ::core::option::Option<::prost::alloc::string::String>,
     /// GenerateName is an optional prefix, used by the server, to generate a unique
     /// name ONLY IF the Name field has not been provided.
@@ -648,6 +755,7 @@ pub struct ObjectMeta {
     /// More info: <https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency>
     /// +optional
     #[prost(string, optional, tag="2")]
+    #[serde(default)]
     pub generate_name: ::core::option::Option<::prost::alloc::string::String>,
     /// Namespace defines the space within which each name must be unique. An empty namespace is
     /// equivalent to the "default" namespace, but "default" is the canonical representation.
@@ -659,6 +767,7 @@ pub struct ObjectMeta {
     /// More info: <http://kubernetes.io/docs/user-guide/namespaces>
     /// +optional
     #[prost(string, optional, tag="3")]
+    #[serde(default)]
     pub namespace: ::core::option::Option<::prost::alloc::string::String>,
     /// SelfLink is a URL representing this object.
     /// Populated by the system.
@@ -669,6 +778,7 @@ pub struct ObjectMeta {
     /// to be removed in 1.21 release.
     /// +optional
     #[prost(string, optional, tag="4")]
+    #[serde(default)]
     pub self_link: ::core::option::Option<::prost::alloc::string::String>,
     /// UID is the unique in time and space value for this object. It is typically generated by
     /// the server on successful creation of a resource and is not allowed to change on PUT
@@ -679,6 +789,7 @@ pub struct ObjectMeta {
     /// More info: <http://kubernetes.io/docs/user-guide/identifiers#uids>
     /// +optional
     #[prost(string, optional, tag="5")]
+    #[serde(default)]
     pub uid: ::core::option::Option<::prost::alloc::string::String>,
     /// An opaque value that represents the internal version of this object that can
     /// be used by clients to determine when objects have changed. May be used for optimistic
@@ -692,11 +803,13 @@ pub struct ObjectMeta {
     /// More info: <https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency>
     /// +optional
     #[prost(string, optional, tag="6")]
+    #[serde(default)]
     pub resource_version: ::core::option::Option<::prost::alloc::string::String>,
     /// A sequence number representing a specific generation of the desired state.
     /// Populated by the system. Read-only.
     /// +optional
     #[prost(int64, optional, tag="7")]
+    #[serde(default)]
     pub generation: ::core::option::Option<i64>,
     /// CreationTimestamp is a timestamp representing the server time when this object was
     /// created. It is not guaranteed to be set in happens-before order across separate operations.
@@ -708,6 +821,7 @@ pub struct ObjectMeta {
     /// More info: <https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata>
     /// +optional
     #[prost(message, optional, tag="8")]
+    #[serde(default)]
     pub creation_timestamp: ::core::option::Option<Time>,
     /// DeletionTimestamp is RFC 3339 date and time at which this resource will be deleted. This
     /// field is set by the server when a graceful deletion is requested by the user, and is not
@@ -729,6 +843,7 @@ pub struct ObjectMeta {
     /// More info: <https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata>
     /// +optional
     #[prost(message, optional, tag="9")]
+    #[serde(default)]
     pub deletion_timestamp: ::core::option::Option<Time>,
     /// Number of seconds allowed for this object to gracefully terminate before
     /// it will be removed from the system. Only set when deletionTimestamp is also set.
@@ -736,6 +851,7 @@ pub struct ObjectMeta {
     /// Read-only.
     /// +optional
     #[prost(int64, optional, tag="10")]
+    #[serde(default)]
     pub deletion_grace_period_seconds: ::core::option::Option<i64>,
     /// Map of string keys and values that can be used to organize and categorize
     /// (scope and select) objects. May match selectors of replication controllers
@@ -743,6 +859,7 @@ pub struct ObjectMeta {
     /// More info: <http://kubernetes.io/docs/user-guide/labels>
     /// +optional
     #[prost(map="string, string", tag="11")]
+    #[serde(default)]
     pub labels: ::std::collections::HashMap<::prost::alloc::string::String, ::prost::alloc::string::String>,
     /// Annotations is an unstructured key value map stored with a resource that may be
     /// set by external tools to store and retrieve arbitrary metadata. They are not
@@ -750,6 +867,7 @@ pub struct ObjectMeta {
     /// More info: <http://kubernetes.io/docs/user-guide/annotations>
     /// +optional
     #[prost(map="string, string", tag="12")]
+    #[serde(default)]
     pub annotations: ::std::collections::HashMap<::prost::alloc::string::String, ::prost::alloc::string::String>,
     /// List of objects depended by this object. If ALL objects in the list have
     /// been deleted, this object will be garbage collected. If this object is managed by a controller,
@@ -759,6 +877,7 @@ pub struct ObjectMeta {
     /// +patchMergeKey=uid
     /// +patchStrategy=merge
     #[prost(message, repeated, tag="13")]
+    #[serde(default)]
     pub owner_references: ::prost::alloc::vec::Vec<OwnerReference>,
     /// Must be empty before the object is deleted from the registry. Each entry
     /// is an identifier for the responsible component that will remove the entry
@@ -776,12 +895,14 @@ pub struct ObjectMeta {
     /// +optional
     /// +patchStrategy=merge
     #[prost(string, repeated, tag="14")]
+    #[serde(default)]
     pub finalizers: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// The name of the cluster which the object belongs to.
     /// This is used to distinguish resources with same name and namespace in different clusters.
     /// This field is not set anywhere right now and apiserver is going to ignore it if set in create or update request.
     /// +optional
     #[prost(string, optional, tag="15")]
+    #[serde(default)]
     pub cluster_name: ::core::option::Option<::prost::alloc::string::String>,
     /// ManagedFields maps workflow-id and version to the set of fields
     /// that are managed by that workflow. This is mostly for internal
@@ -793,33 +914,39 @@ pub struct ObjectMeta {
     ///
     /// +optional
     #[prost(message, repeated, tag="17")]
+    #[serde(default)]
     pub managed_fields: ::prost::alloc::vec::Vec<ManagedFieldsEntry>,
 }
 /// OwnerReference contains enough information to let you identify an owning
 /// object. An owning object must be in the same namespace as the dependent, or
 /// be cluster-scoped, so there is no namespace field.
 #[derive(serde::Serialize, serde::Deserialize)]
-#[serde(default)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OwnerReference {
     /// API version of the referent.
     #[prost(string, optional, tag="5")]
+    #[serde(default)]
     pub api_version: ::core::option::Option<::prost::alloc::string::String>,
     /// Kind of the referent.
     /// More info: <https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds>
     #[prost(string, optional, tag="1")]
+    #[serde(default)]
     pub kind: ::core::option::Option<::prost::alloc::string::String>,
     /// Name of the referent.
     /// More info: <http://kubernetes.io/docs/user-guide/identifiers#names>
     #[prost(string, optional, tag="3")]
+    #[serde(default)]
     pub name: ::core::option::Option<::prost::alloc::string::String>,
     /// UID of the referent.
     /// More info: <http://kubernetes.io/docs/user-guide/identifiers#uids>
     #[prost(string, optional, tag="4")]
+    #[serde(default)]
     pub uid: ::core::option::Option<::prost::alloc::string::String>,
     /// If true, this reference points to the managing controller.
     /// +optional
     #[prost(bool, optional, tag="6")]
+    #[serde(default)]
     pub controller: ::core::option::Option<bool>,
     /// If true, AND if the owner has the "foregroundDeletion" finalizer, then
     /// the owner cannot be deleted from the key-value store until this
@@ -829,42 +956,50 @@ pub struct OwnerReference {
     /// otherwise 422 (Unprocessable Entity) will be returned.
     /// +optional
     #[prost(bool, optional, tag="7")]
+    #[serde(default)]
     pub block_owner_deletion: ::core::option::Option<bool>,
 }
 /// PartialObjectMetadata is a generic representation of any object with ObjectMeta. It allows clients
 /// to get access to a particular ObjectMeta schema without knowing the details of the version.
 /// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PartialObjectMetadata {
     /// Standard object's metadata.
     /// More info: <https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata>
     /// +optional
     #[prost(message, optional, tag="1")]
+    #[serde(default)]
     pub metadata: ::core::option::Option<ObjectMeta>,
 }
 /// PartialObjectMetadataList contains a list of objects containing only their metadata
 /// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PartialObjectMetadataList {
     /// Standard list metadata.
     /// More info: <https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds>
     /// +optional
     #[prost(message, optional, tag="1")]
+    #[serde(default)]
     pub metadata: ::core::option::Option<ListMeta>,
     /// items contains each of the included items.
     #[prost(message, repeated, tag="2")]
+    #[serde(default)]
     pub items: ::prost::alloc::vec::Vec<PartialObjectMetadata>,
 }
 /// Patch is provided to give a concrete name and type to the Kubernetes PATCH request body.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Patch {
 }
 /// PatchOptions may be provided when patching an API object.
 /// PatchOptions is meant to be a superset of UpdateOptions.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PatchOptions {
     /// When present, indicates that modifications should not be
@@ -874,12 +1009,14 @@ pub struct PatchOptions {
     /// - All: all dry run stages will be processed
     /// +optional
     #[prost(string, repeated, tag="1")]
+    #[serde(default)]
     pub dry_run: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// Force is going to "force" Apply requests. It means user will
     /// re-acquire conflicting fields owned by other people. Force
     /// flag must be unset for non-apply patch requests.
     /// +optional
     #[prost(bool, optional, tag="2")]
+    #[serde(default)]
     pub force: ::core::option::Option<bool>,
     /// fieldManager is a name associated with the actor or entity
     /// that is making these changes. The value must be less than or
@@ -890,60 +1027,73 @@ pub struct PatchOptions {
     /// types (JsonPatch, MergePatch, StrategicMergePatch).
     /// +optional
     #[prost(string, optional, tag="3")]
+    #[serde(default)]
     pub field_manager: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// Preconditions must be fulfilled before an operation (update, delete, etc.) is carried out.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Preconditions {
     /// Specifies the target UID.
     /// +optional
     #[prost(string, optional, tag="1")]
+    #[serde(default)]
     pub uid: ::core::option::Option<::prost::alloc::string::String>,
     /// Specifies the target ResourceVersion
     /// +optional
     #[prost(string, optional, tag="2")]
+    #[serde(default)]
     pub resource_version: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// RootPaths lists the paths available at root.
 /// For example: "/healthz", "/apis".
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RootPaths {
     /// paths are the paths available at root.
     #[prost(string, repeated, tag="1")]
+    #[serde(default)]
     pub paths: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 /// ServerAddressByClientCIDR helps the client to determine the server address that they should use, depending on the clientCIDR that they match.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ServerAddressByClientCidr {
     /// The CIDR with which clients can match their IP to figure out the server address that they should use.
     #[prost(string, optional, tag="1")]
+    #[serde(default)]
     pub client_cidr: ::core::option::Option<::prost::alloc::string::String>,
     /// Address of this server, suitable for a client that matches the above CIDR.
     /// This can be a hostname, hostname:port, IP or IP:port.
     #[prost(string, optional, tag="2")]
+    #[serde(default)]
     pub server_address: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// Status is a return value for calls that don't return other objects.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Status {
     /// Standard list metadata.
     /// More info: <https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds>
     /// +optional
     #[prost(message, optional, tag="1")]
+    #[serde(default)]
     pub metadata: ::core::option::Option<ListMeta>,
     /// Status of the operation.
     /// One of: "Success" or "Failure".
     /// More info: <https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status>
     /// +optional
     #[prost(string, optional, tag="2")]
+    #[serde(default)]
     pub status: ::core::option::Option<::prost::alloc::string::String>,
     /// A human-readable description of the status of this operation.
     /// +optional
     #[prost(string, optional, tag="3")]
+    #[serde(default)]
     pub message: ::core::option::Option<::prost::alloc::string::String>,
     /// A machine-readable description of why this operation is in the
     /// "Failure" status. If this value is empty there
@@ -951,6 +1101,7 @@ pub struct Status {
     /// code but does not override it.
     /// +optional
     #[prost(string, optional, tag="4")]
+    #[serde(default)]
     pub reason: ::core::option::Option<::prost::alloc::string::String>,
     /// Extended data associated with the reason.  Each reason may define its
     /// own extended details. This field is optional and the data returned
@@ -958,26 +1109,31 @@ pub struct Status {
     /// the reason type.
     /// +optional
     #[prost(message, optional, tag="5")]
+    #[serde(default)]
     pub details: ::core::option::Option<StatusDetails>,
     /// Suggested HTTP return code for this status, 0 if not set.
     /// +optional
     #[prost(int32, optional, tag="6")]
+    #[serde(default)]
     pub code: ::core::option::Option<i32>,
 }
 /// StatusCause provides more information about an api.Status failure, including
 /// cases when multiple errors are encountered.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StatusCause {
     /// A machine-readable description of the cause of the error. If this value is
     /// empty there is no information available.
     /// +optional
     #[prost(string, optional, tag="1")]
+    #[serde(default)]
     pub reason: ::core::option::Option<::prost::alloc::string::String>,
     /// A human-readable description of the cause of the error.  This field may be
     /// presented as-is to a reader.
     /// +optional
     #[prost(string, optional, tag="2")]
+    #[serde(default)]
     pub message: ::core::option::Option<::prost::alloc::string::String>,
     /// The field of the resource that has caused this error, as named by its JSON
     /// serialization. May include dot and postfix notation for nested attributes.
@@ -990,6 +1146,7 @@ pub struct StatusCause {
     ///   "items\[0\].name" - the field "name" on the first array entry in "items"
     /// +optional
     #[prost(string, optional, tag="3")]
+    #[serde(default)]
     pub field: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// StatusDetails is a set of additional properties that MAY be set by the
@@ -999,44 +1156,52 @@ pub struct StatusCause {
 /// and should assume that any attribute may be empty, invalid, or under
 /// defined.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StatusDetails {
     /// The name attribute of the resource associated with the status StatusReason
     /// (when there is a single name which can be described).
     /// +optional
     #[prost(string, optional, tag="1")]
+    #[serde(default)]
     pub name: ::core::option::Option<::prost::alloc::string::String>,
     /// The group attribute of the resource associated with the status StatusReason.
     /// +optional
     #[prost(string, optional, tag="2")]
+    #[serde(default)]
     pub group: ::core::option::Option<::prost::alloc::string::String>,
     /// The kind attribute of the resource associated with the status StatusReason.
     /// On some operations may differ from the requested resource Kind.
     /// More info: <https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds>
     /// +optional
     #[prost(string, optional, tag="3")]
+    #[serde(default)]
     pub kind: ::core::option::Option<::prost::alloc::string::String>,
     /// UID of the resource.
     /// (when there is a single resource which can be described).
     /// More info: <http://kubernetes.io/docs/user-guide/identifiers#uids>
     /// +optional
     #[prost(string, optional, tag="6")]
+    #[serde(default)]
     pub uid: ::core::option::Option<::prost::alloc::string::String>,
     /// The Causes array includes more details associated with the StatusReason
     /// failure. Not all StatusReasons may provide detailed causes.
     /// +optional
     #[prost(message, repeated, tag="4")]
+    #[serde(default)]
     pub causes: ::prost::alloc::vec::Vec<StatusCause>,
     /// If specified, the time in seconds before the operation should be retried. Some errors may indicate
     /// the client must take an alternate action - for those errors this field may indicate how long to wait
     /// before taking the alternate action.
     /// +optional
     #[prost(int32, optional, tag="5")]
+    #[serde(default)]
     pub retry_after_seconds: ::core::option::Option<i32>,
 }
 /// TableOptions are used when a Table is requested by the caller.
 /// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TableOptions {
     /// includeObject decides whether to include each object along with its columnar information.
@@ -1044,6 +1209,7 @@ pub struct TableOptions {
     /// specifying "Metadata" (the default) will return the object's metadata in the PartialObjectMetadata kind
     /// in version v1beta1 of the meta.k8s.io API group.
     #[prost(string, optional, tag="1")]
+    #[serde(default)]
     pub include_object: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// Time is a wrapper around time.Time which supports correct
@@ -1054,36 +1220,42 @@ pub struct TableOptions {
 /// +protobuf.as=Timestamp
 /// +protobuf.options.(gogoproto.goproto_stringer)=false
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Time {
     /// Represents seconds of UTC time since Unix epoch
     /// 1970-01-01T00:00:00Z. Must be from 0001-01-01T00:00:00Z to
     /// 9999-12-31T23:59:59Z inclusive.
     #[prost(int64, optional, tag="1")]
+    #[serde(default)]
     pub seconds: ::core::option::Option<i64>,
     /// Non-negative fractions of a second at nanosecond resolution. Negative
     /// second values with fractions must still have non-negative nanos values
     /// that count forward in time. Must be from 0 to 999,999,999
     /// inclusive. This field may be limited in precision depending on context.
     #[prost(int32, optional, tag="2")]
+    #[serde(default)]
     pub nanos: ::core::option::Option<i32>,
 }
 /// Timestamp is a struct that is equivalent to Time, but intended for
 /// protobuf marshalling/unmarshalling. It is generated into a serialization
 /// that matches Time. Do not use in Go structs.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Timestamp {
     /// Represents seconds of UTC time since Unix epoch
     /// 1970-01-01T00:00:00Z. Must be from 0001-01-01T00:00:00Z to
     /// 9999-12-31T23:59:59Z inclusive.
     #[prost(int64, optional, tag="1")]
+    #[serde(default)]
     pub seconds: ::core::option::Option<i64>,
     /// Non-negative fractions of a second at nanosecond resolution. Negative
     /// second values with fractions must still have non-negative nanos values
     /// that count forward in time. Must be from 0 to 999,999,999
     /// inclusive. This field may be limited in precision depending on context.
     #[prost(int32, optional, tag="2")]
+    #[serde(default)]
     pub nanos: ::core::option::Option<i32>,
 }
 /// TypeMeta describes an individual object in an API response or request
@@ -1092,6 +1264,7 @@ pub struct Timestamp {
 ///
 /// +k8s:deepcopy-gen=false
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TypeMeta {
     /// Kind is a string value representing the REST resource this object represents.
@@ -1101,6 +1274,7 @@ pub struct TypeMeta {
     /// More info: <https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds>
     /// +optional
     #[prost(string, optional, tag="1")]
+    #[serde(default)]
     pub kind: ::core::option::Option<::prost::alloc::string::String>,
     /// APIVersion defines the versioned schema of this representation of an object.
     /// Servers should convert recognized schemas to the latest internal value, and
@@ -1108,11 +1282,13 @@ pub struct TypeMeta {
     /// More info: <https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources>
     /// +optional
     #[prost(string, optional, tag="2")]
+    #[serde(default)]
     pub api_version: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// UpdateOptions may be provided when updating an API object.
 /// All fields in UpdateOptions should also be present in PatchOptions.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UpdateOptions {
     /// When present, indicates that modifications should not be
@@ -1122,6 +1298,7 @@ pub struct UpdateOptions {
     /// - All: all dry run stages will be processed
     /// +optional
     #[prost(string, repeated, tag="1")]
+    #[serde(default)]
     pub dry_run: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// fieldManager is a name associated with the actor or entity
     /// that is making these changes. The value must be less than or
@@ -1129,6 +1306,7 @@ pub struct UpdateOptions {
     /// as defined by <https://golang.org/pkg/unicode/#IsPrint.>
     /// +optional
     #[prost(string, optional, tag="2")]
+    #[serde(default)]
     pub field_manager: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// Verbs masks the value so protobuf can generate
@@ -1138,9 +1316,11 @@ pub struct UpdateOptions {
 ///
 /// items, if empty, will result in an empty slice
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Verbs {
     #[prost(string, repeated, tag="1")]
+    #[serde(default)]
     pub items: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 /// Event represents a single event to a watched resource.
@@ -1149,9 +1329,11 @@ pub struct Verbs {
 /// +k8s:deepcopy-gen=true
 /// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct WatchEvent {
     #[prost(string, optional, tag="1")]
+    #[serde(default)]
     pub r#type: ::core::option::Option<::prost::alloc::string::String>,
     /// Object is:
     ///  * If Type is Added or Modified: the new state of the object.
@@ -1159,5 +1341,6 @@ pub struct WatchEvent {
     ///  * If Type is Error: *Status is recommended; other types may make sense
     ///    depending on context.
     #[prost(message, optional, tag="2")]
+    #[serde(default)]
     pub object: ::core::option::Option<super::super::super::runtime::RawExtension>,
 }
